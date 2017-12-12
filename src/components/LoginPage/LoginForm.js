@@ -3,7 +3,9 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { Input, Button } from 'semantic-ui-react'
 
+import {getIsRegistered, getError} from '../../reducers/loginReducer'
 import { loginRequest } from '../../actions/loginActions';
+import { registRequest } from '../../actions/registActions';
 import Logo from './Logo'
 
 class LoginForm extends PureComponent{
@@ -11,11 +13,6 @@ class LoginForm extends PureComponent{
     state = {
         email: '',
         pass: ''
-    }
-
-    componentWillReceiveProps(newProps) {
-        const { email,  pass} = newProps;
-        this.setState({ email: email, pass: pass})
     }
 
     handleChangeInput = e => {
@@ -30,6 +27,12 @@ class LoginForm extends PureComponent{
         loginRequest(email, pass);
     };
 
+    handleRegist = () => {
+        let { email, pass } = this.state;
+        let { registRequest } = this.props;
+        registRequest(email, pass);
+    };
+
     render(){
         const {isRegistered, error} = this.props
 
@@ -41,7 +44,7 @@ class LoginForm extends PureComponent{
                     <Input fluid icon='lock' iconPosition='left' placeholder='password' className='login__input' name="pass" onChange={this.handleChangeInput} />
                     {isRegistered === true
                         ? <Button fluid color='blue' className='login__button' onClick={this.handleLogin}>Войти</Button>
-                        : <Button fluid color='blue' className='login__button'>Зарегистрироваться</Button>
+                        : <Button fluid color='blue' className='login__button' onClick={this.handleRegist}>Зарегистрироваться</Button>
                     }
                     {error && <p className="error">{error}</p>}
                 </div>
@@ -52,7 +55,6 @@ class LoginForm extends PureComponent{
 }
 
 LoginForm.propTypes = {
-    // isAuthorized: PropTypes.boolean,
     isRegistered: PropTypes.boolean,
     error: PropTypes.string,
     email: PropTypes.string,
@@ -60,17 +62,17 @@ LoginForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    // isAuthorized: state.login.isAuthorized,
-    isRegistered: state.registration.isRegistered,
-    error: state.login.error,
-    email: state.login.email,
-    pass: state.login.pass,
+    isRegistered: getIsRegistered(state),
+    error: getError(state)
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         loginRequest: (email, pass) => {
             dispatch(loginRequest(email, pass));
+        },
+        registRequest: (email, pass) => {
+            dispatch(registRequest(email, pass));
         }
     };
 };

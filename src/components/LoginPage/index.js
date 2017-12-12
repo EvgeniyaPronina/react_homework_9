@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Particles from 'react-particles-js';
 import {default as params}  from '../../helpers/particles-params'
+import {getIsAuthorized} from '../../reducers/loginReducer'
+
 import LoginForm from './LoginForm'
 import StatusBlock from './StatusBlock'
 
@@ -45,7 +47,7 @@ LoginPage.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    isAuthorized: state.login.isAuthorized,
+    isAuthorized: getIsAuthorized(state),
 });
 
 export default connect(mapStateToProps)(LoginPage);

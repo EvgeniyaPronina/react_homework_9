@@ -1,29 +1,58 @@
-import {loginRequest, loginSuccess, loginFailure} from '../actions/loginActions';
-import {toRegister, toLogin} from '../actions/registActions';
-import {handleActions} from 'redux-actions';
+import {
+    loginRequest,
+    loginSuccess,
+    loginFailure
+} from '../actions/loginActions';
+import {
+    toRegister,
+    toLogin,
+    registSuccess,
+    registFailure
+} from '../actions/registActions';
+import {combineReducers} from 'redux';
+import {handleAction, handleActions} from 'redux-actions';
 
-const initialState = {
-    isAuthorized: false,
-    error: ''
-}
 
-
-const login = handleActions(
+const isAuthorized = handleActions(
     {
-        [loginSuccess]: (state, action) => ({
-            ...state,
-            isAuthorized: true
-        }),
-        [loginFailure]: (state, action) => ({
-            ...state,
-            error: 'неверное имя пользователя и/или пароль'
-        }),
-        [toRegister]: () => ({isAuthorized: false, error: ''}),
-        [toLogin]: (state) => ({...state, error: ''})
+        [loginSuccess]: () => true,
+        [loginFailure]: () => false,
+        [toRegister]: () => false,
+        [registSuccess]: () => true,
+        [registFailure]: () => false
     },
-    initialState
+    false
 );
 
-export default login
+const error = handleActions(
+    {
+        [loginSuccess]: () => '',
+        [loginFailure]: (state, action) =>  'неверное имя пользователя и/или пароль',
+        [toRegister]: () => '',
+        [toLogin]: () => '',
+        [registSuccess]: () => '',
+        [registFailure]: (state, action) =>  'при регистрации произошла ошибка',
+    },
+    ''
+);
 
-// export const getShowId = state => state.showId;
+const isRegistered = handleActions(
+    {
+        [loginSuccess]: () => true,
+        [toRegister]: () => false,
+        [toLogin]: () => true,
+        [registSuccess]: () => true,
+        [registFailure]: () => false
+    },
+    true
+);
+
+export default combineReducers({
+    isAuthorized,
+    isRegistered,
+    error
+});
+
+export const getIsAuthorized = state => state.loginReducer.isAuthorized;
+export const getIsRegistered = state => state.loginReducer.isRegistered;
+export const getError = state => state.loginReducer.error;

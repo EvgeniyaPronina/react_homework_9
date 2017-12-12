@@ -1,6 +1,12 @@
 import {createActions} from 'redux-actions';
 
-const actionCreators = createActions(
+export const {
+    login: {
+        request: loginRequest,
+        success: loginSuccess,
+        failure: loginFailure,
+    }
+} = createActions(
     {
         LOGIN: {
             REQUEST: (email, pass) => ({email: email, pass: pass}),
@@ -11,6 +17,6 @@ const actionCreators = createActions(
     {namespace: '_'}
 );
 
-export const loginRequest = actionCreators.login.request;
-export const loginSuccess = actionCreators.login.success;
-export const loginFailure = actionCreators.login.failure;
+// export const loginRequest = actionCreators.login.request;
+// export const loginSuccess = actionCreators.login.success;
+// export const loginFailure = actionCreators.login.failure;

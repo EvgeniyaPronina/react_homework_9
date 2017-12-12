@@ -15,7 +15,7 @@ const store = createStore();
 store.subscribe(() => {
     const state = store.getState()
 
-    localStorage.setItem('state-isAuthorized', JSON.stringify(state.login.isAuthorized))
+    localStorage.setItem('state-isAuthorized', JSON.stringify(state.loginReducer.isAuthorized))
 })
 
 

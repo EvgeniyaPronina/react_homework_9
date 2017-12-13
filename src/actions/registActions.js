@@ -24,3 +24,7 @@ export const {
     },
     {namespace: '_'}
 );
+
+// export const registRequest = actionCreators.regist.request;
+// export const registSuccess = actionCreators.regist.success;
+// export const registFailure = actionCreators.regist.failure;

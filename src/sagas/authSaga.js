@@ -1,6 +1,6 @@
-import {call, put, take, select, takeLatest, fork, all} from 'redux-saga/effects';
-import {loginRequest, loginSuccess, loginFailure, logout} from '../actions/loginActions';
-import {registRequest, registSuccess, registFailure} from '../actions/registActions';
+import {call, put, take, select, fork, all} from 'redux-saga/effects';
+import {loginRequest, loginSuccess, logout} from '../actions/loginActions';
+import {registRequest, registSuccess} from '../actions/registActions';
 import {login, registration, setTokenApi, clearTokenApi} from '../helpers/api';
 import {getTokenFromLocalStorage, setTokenToLocalStorage, removeTokenFromLocalStorage} from '../helpers/localStorage';
 import { getIsAuthorized } from "../reducers/loginReducer";
@@ -12,8 +12,9 @@ export default function* authSaga() {
         let token;
 
         if (!isAuthorized) {
-            if (localStorageToken !== '') {
+            if (localStorageToken != null) {
                 token = localStorageToken;
+                console.log(token);
                 yield put(loginSuccess());
             } else {
                 const action = yield take([loginSuccess, registSuccess]);

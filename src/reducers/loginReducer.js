@@ -35,6 +35,8 @@ const error = handleActions(
     ''
 );
 
+
+
 const isRegistered = handleActions(
     {
         [loginSuccess]: () => true,

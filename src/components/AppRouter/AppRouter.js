@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+
+import {getIsAuthorized} from '../../reducers/loginReducer'
 import App from '../AppPage/App';
 import LoginPage from '../LoginPage';
+import InnerPage from '../InnerPage';
 
 class AppRouter extends Component {
     render() {
+        const {isAuthorized} = this.props
+
         return (
             <div className="App">
                 <Switch>
-                    <Route path="/" exact component={App} />
+                    {isAuthorized === true ? (
+                        <Route path="/trade/:currency" exact component={InnerPage} />
+                    ) : (
+                        <Route path="/*" component={LoginPage} />
+                    )}
                     <Route path="/login" component={LoginPage} />
-                    <Redirect to="/" />
                 </Switch>
             </div>
         );
     }
 }
 
-export default AppRouter;
+AppRouter.propTypes = {
+    isAuthorized: PropTypes.bool,
+};
 
+const mapStateToProps = state => ({
+    isAuthorized: getIsAuthorized(state),
+});
+
+export default withRouter(connect(mapStateToProps)(AppRouter));

@@ -19,7 +19,6 @@ export const {
     {namespace: '_'}
 );
 
-
 // export const {
 //     logout
 // } = createAction(

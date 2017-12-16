@@ -27,9 +27,10 @@ export const login = ({email, password}) =>
     });
 
 export const registration = ({email, password}) =>
-    instance.post('/users', `email=${email}&password=${password}`).then(response => {
-        if (response.data.result === 'error') return Promise.reject(response);
-        return response;
-    });
+  instance.post('/users', `email=${email}&password=${password}`).then(response => {
+    if (response.data.result === 'error') return Promise.reject(response);
+    return response;
+  });
 
 export const candles = (symbol, offset) => instance.get('/candles', {params: {symbol, offset}});
+

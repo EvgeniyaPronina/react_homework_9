@@ -16,7 +16,7 @@ class AppRouter extends Component {
             <div className="App">
                 <Switch>
                     {isAuthorized === true ? (
-                        <Route path="/" exact component={InnerPage} />
+                        <Route path="/trade/:currency" exact component={InnerPage} />
                     ) : (
                         <Route path="/*" component={LoginPage} />
                     )}

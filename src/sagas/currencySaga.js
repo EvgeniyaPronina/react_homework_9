@@ -40,7 +40,9 @@ export function* currencyWatch() {
 
 function* fetchBtcFlow(action) {
     try {
+        console.log(action.payload)
         const response = yield call(candles, 'btc', action.payload);
+        console.log(response)
         yield put(fetchBtcSuccess(response.data.result));
     } catch (error) {
         yield put(fetchBtcFailure(error));
@@ -50,6 +52,7 @@ function* fetchBtcFlow(action) {
 function* fetchEthFlow(action) {
     try {
         const response = yield call(candles, 'eth', action.payload);
+        console.log(response.data.result)
         yield put(fetchEthSuccess(response.data.result));
     } catch (error) {
         yield put(fetchEthFailure(error));

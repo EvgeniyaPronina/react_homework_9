@@ -1,6 +1,6 @@
 import {takeLatest, fork, take, select, put, cancel, call} from 'redux-saga/effects';
 import {delay} from 'redux-saga';
-import {loginSuccess, toLogout} from '../actions/loginActions';
+import {loginSuccess, logout} from '../actions/loginActions';
 import {getOffset} from '../reducers/currencyReducer';
 import {
     selectBtc,
@@ -28,13 +28,13 @@ function* fetchCurrencyFlow() {
 export function* currencyWatch() {
     let currencyTask;
     while (true) {
-        const action = yield take([loginSuccess, toLogout, selectBtc, selectEth, selectOffset]);
+        const action = yield take([loginSuccess, logout, selectBtc, selectEth, selectOffset]);
 
         if (currencyTask) {
             yield cancel(currencyTask);
             currencyTask = undefined;
         }
-        if (action.type !== toLogout.toString()) currencyTask = yield fork(fetchCurrencyFlow);
+        if (action.type !== logout.toString()) currencyTask = yield fork(fetchCurrencyFlow);
     }
 }
 

@@ -1,15 +1,15 @@
 import {call, put, takeLatest, fork, all} from 'redux-saga/effects';
 import {loginRequest, loginSuccess, loginFailure} from '../actions/loginActions';
 import {registRequest, registSuccess, registFailure} from '../actions/registActions';
-import {login, registration} from '../helpers/api';
+import {login, registration, setTokenApi, clearTokenApi} from '../helpers/api';
+
 
 function* fetchLogin(action) {
 
     try {
-        const {email, pass} = action.payload
         const loginResult = yield call(login, action.payload);
         console.log(loginResult)
-        yield put(loginSuccess(loginResult));
+        yield put(loginSuccess(loginResult.data.jwt));
     } catch (error) {
         console.log(error)
         yield put(loginFailure(error));
@@ -23,10 +23,9 @@ function* loginRequestWatch() {
 function* fetchRegist(action) {
 
     try {
-        const {email, pass} = action.payload
         const registResult = yield call(registration, action.payload);
         console.log(registResult)
-        yield put(registSuccess(registResult));
+        yield put(registSuccess(registResult.data.jwt));
     } catch (error) {
         console.log(error)
         yield put(registFailure(error));
@@ -44,3 +43,29 @@ export default function* loginSaga () {
         fork(registRequestWatch),
     ])
 }
+
+
+
+// function* loginFlow() {
+//     while (true) {
+//         const {email, pass} = yield take('LOGIN_REQUEST');
+//
+//         const task = yield fork(authorize, email, pass);
+//         const action = yield take(['LOGOUT', 'LOGIN_ERROR']);
+//
+//         if (action.type === 'LOGOUT') yield cancel(task);
+//
+//         yield call(clearTokenApi, 'token');
+//     }
+// }
+//
+// function* authorize(email, pass) {
+//     try {
+//         const token = yield call(login, email, pass);
+//         yield put(loginSuccess(token));
+//         yield call(setTokenApi, {token});
+//         return token;
+//     } catch (error) {
+//         yield put(loginFailure(error));
+//     }
+// }

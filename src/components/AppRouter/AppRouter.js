@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
@@ -27,9 +27,9 @@ class AppRouter extends Component {
     }
 }
 
-// AppRouter.propTypes = {
-//     isAuthorized: PropTypes.boolean,
-// };
+AppRouter.propTypes = {
+    isAuthorized: PropTypes.bool,
+};
 
 const mapStateToProps = state => ({
     isAuthorized: getIsAuthorized(state),

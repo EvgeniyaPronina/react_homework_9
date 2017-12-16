@@ -1,5 +1,4 @@
 import {
-    loginRequest,
     loginSuccess,
     loginFailure
 } from '../actions/loginActions';

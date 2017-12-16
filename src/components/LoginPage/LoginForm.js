@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Input, Button } from 'semantic-ui-react'
 
@@ -55,7 +55,7 @@ class LoginForm extends PureComponent{
 }
 
 LoginForm.propTypes = {
-    isRegistered: PropTypes.boolean,
+    isRegistered: PropTypes.bool,
     error: PropTypes.string,
     email: PropTypes.string,
     pass: PropTypes.string,

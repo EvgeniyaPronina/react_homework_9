@@ -30,3 +30,5 @@ export const registration = ({email, password}) =>
     if (response.data.result === 'error') return Promise.reject(response);
     return response;
   });
+
+export const candles = (symbol, offset) => instance.get('/candles', {params: {symbol, offset}});

@@ -17,6 +17,12 @@ export const {
     {namespace: '_'}
 );
 
+export const {
+    toLogout
+} = createActions(
+    'TO_LOGOUT'
+);
+
 // export const loginRequest = actionCreators.login.request;
 // export const loginSuccess = actionCreators.login.success;
 // export const loginFailure = actionCreators.login.failure;

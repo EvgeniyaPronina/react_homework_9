@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {toRegister, toLogin} from '../../actions/registActions';
 import {getIsRegistered} from '../../reducers/loginReducer'
@@ -22,7 +22,7 @@ class StatusBlock extends PureComponent{
 }
 
 StatusBlock.propTypes = {
-    isRegistered: PropTypes.boolean,
+    isRegistered: PropTypes.bool,
     toRegister: PropTypes.func,
     toLogin: PropTypes.func,
 };
